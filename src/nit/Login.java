@@ -12,12 +12,32 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import com.mysql.*;
+@SuppressWarnings("unused")
 public class Login {
-	static String loginUserName;
-	static String loginPassword;
-	static boolean isNotSignIn = false;
+	private static String loginUserName;
+	private static String loginPassword;
+	private static boolean isNotSignIn = false;
+	@SuppressWarnings("static-access")
 	public Login(String userName,String password){
-		this.loginUserName = userName;
+		this.setUserName(userName);
+		this.setPassword(password);
+	}
+	public String getUserName() {
+		return this.loginUserName;
+	}
+	public String getPassword() {
+		return this.loginPassword;
+	}
+	public boolean getIsNotSignIn() {
+		return this.isNotSignIn;
+	}
+	public static void setIsNotSignIn(boolean x) {
+		isNotSignIn = x;
+	}
+	public void setUserName(String username) {
+		this.loginUserName = username;
+	}
+	public void setPassword(String password) {
 		this.loginPassword = password;
 	}
 	public static void main(String args[])throws EOFException, ClassNotFoundException, SQLException {
@@ -41,7 +61,7 @@ public class Login {
 				findUser = true;
 				if (password1.equals(loginPassword)) {
 					System.out.println("登录成功！");
-					isNotSignIn = true;
+					setIsNotSignIn(true);
 				}
 				else 
 					System.out.println("密码输入有误！");
@@ -51,6 +71,8 @@ public class Login {
 		if (!findUser) {
 			System.out.println("该用户不存在！请注册！");
 		}
+		con.close();
+		rs.close();
 		
 	}
 
